@@ -1,0 +1,14 @@
+[project]
+name = "pyweb"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.12",
+    "socket-pro",
+    "uvicorn[standard]>=0.34.2",
+]
+
+[tool.uv.sources]
+socket-pro = { path = "socket_pro-0.1.0-py3-none-any.whl" }
