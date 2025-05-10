@@ -52,6 +52,14 @@ class MTask:
             # Wait for the process to complete
             await self._process.wait()
 
+            await self.__socket.broadcast(
+                self.__messageport,
+                data={
+                    "message": f"Task completed: {asyncio.current_task().get_name()}",
+                    "status": "completed",
+                },
+            )
+
         except CancelledError:
             print("Task was cancelled")
             await self._terminate_process()
@@ -59,6 +67,11 @@ class MTask:
         except Exception as e:
             print(f"Error in task: {e}")
             await self._terminate_process()
+
+            await self.__socket.broadcast(
+                self.__messageport,
+                data={"message": f"Task failed: {e}", "status": "error"},
+            )
             raise
         finally:
             self._process = None
@@ -86,7 +99,10 @@ class MTask:
 
         await self.__socket.broadcast(
             self.__messageport,
-            data={"message": f"Task running: {self.__task1.get_name()}"},
+            data={
+                "message": f"Task running: {self.__task1.get_name()}",
+                "status": "running",
+            },  # send true if task is running and enable stop button in frontend.
         )
 
     async def stop(self):
@@ -97,9 +113,19 @@ class MTask:
             except CancelledError:
                 await self.__socket.broadcast(
                     self.__messageport,
-                    data={"message": f"{self.__task1.get_name()} is cancelled"},
+                    data={
+                        "message": f"{self.__task1.get_name()} is cancelled",
+                        "status": "cancelled",
+                    },
                 )
             except Exception as e:
                 print(f"Error during cancellation: {e}")
+                await self.__socket.broadcast(
+                    self.__messageport,
+                    data={
+                        "message": f"Error during cancellation: {e}",
+                        "status": "error",
+                    },
+                )
             finally:
                 self.__task1 = None

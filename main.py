@@ -24,7 +24,7 @@ async def socketserver(websocket: WebSocket):
 
             match data["data_type"]:
                 case "nmap-start":
-                    cmd = "sudo nmap -v -A scanme.nmap.org"
+                    cmd = "ping -c 10 google.com"
                     await task1.taskrun(cmd=cmd)
 
                 case "nmap-stop":
