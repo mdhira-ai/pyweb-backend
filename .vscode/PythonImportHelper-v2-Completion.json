@@ -187,7 +187,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "socket = socketio()\napp = FastAPI()\ntask1 = MTask()\n@app.websocket(\"/ws/122\")\nasync def socketserver(websocket: WebSocket):\n    await socket.connect(websocket=websocket)\n    try:\n        while True:\n            data = await websocket.receive_json()\n            print(data['data_type'])",
+        "peekOfCode": "socket = socketio()\napp = FastAPI()\ntask1 = MTask(socket=socket, messageport=\"nmap\")\ntask2 = MTask(socket=socket, messageport=\"ping\")\n@app.websocket(\"/ws/122\")\nasync def socketserver(websocket: WebSocket):\n    await socket.connect(websocket=websocket)\n    try:\n        while True:\n            data = await websocket.receive_json()",
         "detail": "main",
         "documentation": {}
     },
@@ -196,7 +196,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI()\ntask1 = MTask()\n@app.websocket(\"/ws/122\")\nasync def socketserver(websocket: WebSocket):\n    await socket.connect(websocket=websocket)\n    try:\n        while True:\n            data = await websocket.receive_json()\n            print(data['data_type'])\n            match data['data_type']:",
+        "peekOfCode": "app = FastAPI()\ntask1 = MTask(socket=socket, messageport=\"nmap\")\ntask2 = MTask(socket=socket, messageport=\"ping\")\n@app.websocket(\"/ws/122\")\nasync def socketserver(websocket: WebSocket):\n    await socket.connect(websocket=websocket)\n    try:\n        while True:\n            data = await websocket.receive_json()\n            print(data[\"data_type\"])",
         "detail": "main",
         "documentation": {}
     },
@@ -205,7 +205,16 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "task1 = MTask()\n@app.websocket(\"/ws/122\")\nasync def socketserver(websocket: WebSocket):\n    await socket.connect(websocket=websocket)\n    try:\n        while True:\n            data = await websocket.receive_json()\n            print(data['data_type'])\n            match data['data_type']:\n                case \"start\":",
+        "peekOfCode": "task1 = MTask(socket=socket, messageport=\"nmap\")\ntask2 = MTask(socket=socket, messageport=\"ping\")\n@app.websocket(\"/ws/122\")\nasync def socketserver(websocket: WebSocket):\n    await socket.connect(websocket=websocket)\n    try:\n        while True:\n            data = await websocket.receive_json()\n            print(data[\"data_type\"])\n            match data[\"data_type\"]:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "task2",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "task2 = MTask(socket=socket, messageport=\"ping\")\n@app.websocket(\"/ws/122\")\nasync def socketserver(websocket: WebSocket):\n    await socket.connect(websocket=websocket)\n    try:\n        while True:\n            data = await websocket.receive_json()\n            print(data[\"data_type\"])\n            match data[\"data_type\"]:\n                case \"nmap-start\":",
         "detail": "main",
         "documentation": {}
     }
